@@ -1,9 +1,3 @@
-"""Small Basic Blocks - Flask backend.
-
-The server is stateless: the workspace lives in each user's browser (localStorage) and is
-sent to /api/generate whenever it changes. No shared mutable state means any number of users
-can use the app at once without affecting each other.
-"""
 import os
 
 from flask import Flask, jsonify, request, send_from_directory
