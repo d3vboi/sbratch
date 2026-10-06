@@ -160,7 +160,7 @@
     s.dataset.owner = node.id; s.dataset.key = key;
     const child = node.inputs[key];
     if (child) { s.classList.add('filled'); s.appendChild(renderBlock(child)); }
-    else if (p.inline === null) s.classList.add('empty');
+    else if (p.inline === null) s.classList.add('empty', 'hex');
     else {
       const i = el('input', 'inline');
       i.type = 'text'; i.spellcheck = false;
