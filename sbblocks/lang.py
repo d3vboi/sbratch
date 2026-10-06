@@ -10,7 +10,7 @@ RESERVED = {
     # keywords
     "if", "then", "else", "elseif", "endif", "for", "to", "step", "endfor",
     "while", "endwhile", "goto", "sub", "endsub", "and", "or", "true", "false",
-    # builtin objects (a variable with the same name breaks member calls)
+    # builtin objects (variable with the same name breaks member calls)
     "array", "clock", "controls", "desktop", "dictionary", "file", "flickr",
     "graphicswindow", "imagelist", "keyboard", "math", "mouse", "network",
     "program", "shapes", "sound", "stack", "text", "textwindow", "timer",
