@@ -1,5 +1,5 @@
-"""Small Basic block catalog and code generator."""
-from . import definitions  # noqa: F401  (registers all blocks)
+#SB block catalogue and code generator
+from . import definitions  # registers all blocks
 from .generator import generate
 from .registry import catalog
 
