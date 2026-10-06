@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "variables": [
+    "i"
+  ],
+  "stacks": [
+    {
+      "id": "s1",
+      "x": 30,
+      "y": 30,
+      "blocks": [
+        {
+          "id": "ex20",
+          "type": "start",
+          "fields": {},
+          "inputs": {},
+          "slots": {},
+          "counts": {}
+        },
+        {
+          "id": "ex19",
+          "type": "for",
+          "fields": {
+            "var": "i",
+            "start": "1",
+            "end": "10"
+          },
+          "inputs": {},
+          "slots": {
+            "body": [
+              {
+                "id": "ex18",
+                "type": "tw_writeline",
+                "fields": {},
+                "inputs": {
+                  "value": {
+                    "id": "ex17",
+                    "type": "text_join",
+                    "fields": {},
+                    "inputs": {
+                      "a": {
+                        "id": "ex13",
+                        "type": "text_join",
+                        "fields": {},
+                        "inputs": {
+                          "a": {
+                            "id": "ex11",
+                            "type": "var_get",
+                            "fields": {
+                              "name": "i"
+                            },
+                            "inputs": {},
+                            "slots": {},
+                            "counts": {}
+                          },
+                          "b": {
+                            "id": "ex12",
+                            "type": "text_literal",
+                            "fields": {
+                              "value": " x 7 = "
+                            },
+                            "inputs": {},
+                            "slots": {},
+                            "counts": {}
+                          }
+                        },
+                        "slots": {},
+                        "counts": {}
+                      },
+                      "b": {
+                        "id": "ex16",
+                        "type": "math_arith",
+                        "fields": {
+                          "sym": "*"
+                        },
+                        "inputs": {
+                          "a": {
+                            "id": "ex14",
+                            "type": "var_get",
+                            "fields": {
+                              "name": "i"
+                            },
+                            "inputs": {},
+                            "slots": {},
+                            "counts": {}
+                          },
+                          "b": {
+                            "id": "ex15",
+                            "type": "num_literal",
+                            "fields": {
+                              "value": "7"
+                            },
+                            "inputs": {},
+                            "slots": {},
+                            "counts": {}
+                          }
+                        },
+                        "slots": {},
+                        "counts": {}
+                      }
+                    },
+                    "slots": {},
+                    "counts": {}
+                  }
+                },
+                "slots": {},
+                "counts": {}
+              }
+            ]
+          },
+          "counts": {}
+        }
+      ]
+    }
+  ]
+}

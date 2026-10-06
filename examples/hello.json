@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "variables": [],
+  "stacks": [
+    {
+      "id": "s1",
+      "x": 30,
+      "y": 30,
+      "blocks": [
+        {
+          "id": "ex2",
+          "type": "start",
+          "fields": {},
+          "inputs": {},
+          "slots": {},
+          "counts": {}
+        },
+        {
+          "id": "ex1",
+          "type": "tw_writeline",
+          "fields": {
+            "value": "Hello, World!"
+          },
+          "inputs": {},
+          "slots": {},
+          "counts": {}
+        }
+      ]
+    }
+  ]
+}

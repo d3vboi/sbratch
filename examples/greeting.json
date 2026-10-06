@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "variables": [
+    "name"
+  ],
+  "stacks": [
+    {
+      "id": "s1",
+      "x": 30,
+      "y": 30,
+      "blocks": [
+        {
+          "id": "ex10",
+          "type": "start",
+          "fields": {},
+          "inputs": {},
+          "slots": {},
+          "counts": {}
+        },
+        {
+          "id": "ex3",
+          "type": "tw_write",
+          "fields": {
+            "value": "What is your name? "
+          },
+          "inputs": {},
+          "slots": {},
+          "counts": {}
+        },
+        {
+          "id": "ex5",
+          "type": "var_set",
+          "fields": {
+            "name": "name"
+          },
+          "inputs": {
+            "value": {
+              "id": "ex4",
+              "type": "tw_read",
+              "fields": {},
+              "inputs": {},
+              "slots": {},
+              "counts": {}
+            }
+          },
+          "slots": {},
+          "counts": {}
+        },
+        {
+          "id": "ex9",
+          "type": "tw_writeline",
+          "fields": {},
+          "inputs": {
+            "value": {
+              "id": "ex8",
+              "type": "text_join",
+              "fields": {},
+              "inputs": {
+                "a": {
+                  "id": "ex6",
+                  "type": "text_literal",
+                  "fields": {
+                    "value": "Nice to meet you, "
+                  },
+                  "inputs": {},
+                  "slots": {},
+                  "counts": {}
+                },
+                "b": {
+                  "id": "ex7",
+                  "type": "var_get",
+                  "fields": {
+                    "name": "name"
+                  },
+                  "inputs": {},
+                  "slots": {},
+                  "counts": {}
+                }
+              },
+              "slots": {},
+              "counts": {}
+            }
+          },
+          "slots": {},
+          "counts": {}
+        }
+      ]
+    }
+  ]
+}

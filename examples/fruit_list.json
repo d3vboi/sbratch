@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "variables": [
+    "fruits",
+    "fruit"
+  ],
+  "stacks": [
+    {
+      "id": "s1",
+      "x": 30,
+      "y": 30,
+      "blocks": [
+        {
+          "id": "ex30",
+          "type": "start",
+          "fields": {},
+          "inputs": {},
+          "slots": {},
+          "counts": {}
+        },
+        {
+          "id": "ex21",
+          "type": "list_make",
+          "fields": {
+            "list": "fruits",
+            "items_0": "apple",
+            "items_1": "banana",
+            "items_2": "cherry"
+          },
+          "inputs": {},
+          "slots": {},
+          "counts": {
+            "items": 3
+          }
+        },
+        {
+          "id": "ex22",
+          "type": "list_add",
+          "fields": {
+            "list": "fruits",
+            "value": "date"
+          },
+          "inputs": {},
+          "slots": {},
+          "counts": {}
+        },
+        {
+          "id": "ex26",
+          "type": "tw_writeline",
+          "fields": {},
+          "inputs": {
+            "value": {
+              "id": "ex25",
+              "type": "text_join",
+              "fields": {},
+              "inputs": {
+                "a": {
+                  "id": "ex23",
+                  "type": "text_literal",
+                  "fields": {
+                    "value": "I have this many fruits: "
+                  },
+                  "inputs": {},
+                  "slots": {},
+                  "counts": {}
+                },
+                "b": {
+                  "id": "ex24",
+                  "type": "list_count",
+                  "fields": {
+                    "list": "fruits"
+                  },
+                  "inputs": {},
+                  "slots": {},
+                  "counts": {}
+                }
+              },
+              "slots": {},
+              "counts": {}
+            }
+          },
+          "slots": {},
+          "counts": {}
+        },
+        {
+          "id": "ex29",
+          "type": "foreach",
+          "fields": {
+            "item": "fruit",
+            "list": "fruits"
+          },
+          "inputs": {},
+          "slots": {
+            "body": [
+              {
+                "id": "ex28",
+                "type": "tw_writeline",
+                "fields": {},
+                "inputs": {
+                  "value": {
+                    "id": "ex27",
+                    "type": "var_get",
+                    "fields": {
+                      "name": "fruit"
+                    },
+                    "inputs": {},
+                    "slots": {},
+                    "counts": {}
+                  }
+                },
+                "slots": {},
+                "counts": {}
+              }
+            ]
+          },
+          "counts": {}
+        }
+      ]
+    }
+  ]
+}
