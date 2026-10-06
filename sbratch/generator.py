@@ -115,6 +115,8 @@ class Ctx:
             return val
         if t == "variable":
             return self.gen.use_var(val, bool(part.get("writes")), self)
+        if t == "sub":
+                    return self.gen.use_sub(val, self)
         if t == "number":
             val = val.strip()
             if not NUMBER.match(val):
@@ -170,6 +172,8 @@ class Generator:
         self.used_temps: set = set()
         self.temp_n: dict = {}
         self.nodes = 0
+        self.subs: dict = {}      # lowercase -> (name, block id)
+        self.called: set = set()
 
     def _diag(self, level, msg, block=None):
         self.diags.append({"level": level, "message": msg, "block": block})
@@ -209,6 +213,39 @@ class Generator:
         else:
             self.reads.setdefault(low, (self.vars[low], ctx.node.get("id")))
         return self.vars[low]
+
+    def _load_subs(self):
+        for st in _l(self.ws.get("stacks")):
+            blocks = _l(_d(st).get("blocks"))
+            first = blocks[0] if blocks and isinstance(blocks[0], dict) else {}
+            if first.get("type") != "sub_def":
+                continue
+            name = str(_d(first.get("fields")).get("name", "")).strip()
+            low = name.lower()
+            if IDENT.match(name) and low not in RESERVED and low not in self.vars and low not in self.subs:
+                self.subs[low] = (name, first.get("id"))
+
+    def sub_def_name(self, ctx: Ctx) -> str:
+        name = str(_d(ctx.node.get("fields")).get("name", "")).strip()
+        low = name.lower()
+        if not IDENT.match(name):
+            return ctx.problem("subroutine name %s is not valid (letters, digits and _, starting with a letter)" % name)
+        if low in RESERVED:
+            return ctx.problem("subroutine name %s is reserved by Small Basic" % name)
+        if low in self.vars:
+            return ctx.problem("subroutine name %s is already a variable" % name)
+        if self.subs.get(low, (0, None))[1] != ctx.node.get("id"):
+            return ctx.problem("there is already a subroutine called %s" % name)
+        return name
+
+    def use_sub(self, val: str, ctx: Ctx) -> str:
+        if not val:
+            return ctx.problem("choose a subroutine")
+        low = val.lower()
+        if low not in self.subs:
+            return ctx.problem("subroutine %s has not been defined (or its name is invalid)" % val)
+        self.called.add(low)
+        return self.subs[low][0]
 
     def new_temp(self, prefix: str) -> str:
         n = self.temp_n.get(prefix, 0)
@@ -271,9 +308,11 @@ class Generator:
 
     def run(self) -> dict:
         self._load_variables()
+        self._load_subs()
         stacks = [s for s in _l(self.ws.get("stacks")) if isinstance(s, dict)]
         stacks.sort(key=lambda s: (_num(s.get("y")), _num(s.get("x"))))
         lines: list = []
+        sublines: list = []
         started = False
         try:
             for st in stacks:
@@ -282,7 +321,10 @@ class Generator:
                     continue
                 first = blocks[0]
                 d = BLOCKS.get(first.get("type"))
-                if d is not None and d.kind == "hat":
+                if first.get("type") == "sub_def":
+                    body = self.gen_list(blocks, 0, is_top=True)
+                    sublines.extend(body[:1] + [INDENT + l for l in body[1:]] + ["EndSub"])
+                elif d is not None and d.kind == "hat":
                     if started:
                         self.warn("only one 'when program starts' block can be used, extra one is left out", first.get("id"))
                         continue
@@ -298,6 +340,10 @@ class Generator:
         for low, (name, bid) in self.reads.items():
             if low not in self.writes:
                 self.warn("variable %r is used but never given a value" % name, bid)
+        for low, (name, bid) in self.subs.items():
+            if low not in self.called:
+                self.info("subroutine %s is never called" % name, bid)
+        lines.extend(sublines)
         code = "\n".join(lines) + ("\n" if lines else "")
         ok = not any(d["level"] == "error" for d in self.diags)
         return {"ok": ok, "code": code, "diagnostics": self.diags}

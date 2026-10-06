@@ -1,25 +1,3 @@
-"""Block registry.
-
-Blocks are declared with `define(...)` using a *pattern* string, e.g.
-
-    define("var_set", "variables", "statement",
-           "set {name} to {value}",
-           specs={"name": variable(writes=True), "value": inp("any", "0")},
-           code="{name} = {value}")
-
-* `{token}` in the pattern becomes an editable part (input socket, dropdown, ...)
-  described by `specs[token]`; any other text becomes a label.
-* `code` is a template (or a callable taking a generator context) that produces
-  Small Basic source. Placeholders:
-      {name}        value of an input / field (parentheses stripped)
-      {name|op}     input as an operand of a binary operator (kept safe)
-      {$tmp}        a unique temporary variable name for this block
-      {slot}        (alone on a line) the statements nested in a slot, indented
-* Statement blocks produce lines; value blocks produce one expression.
-
-To add a block: call define() in a module under sbratch/definitions/.
-To add a category: call category() at the top of that module.
-"""
 from __future__ import annotations
 
 import re
@@ -29,14 +7,12 @@ from typing import Callable, Dict, List, Optional, Union
 KINDS = ("hat", "statement", "value")
 SHAPES = ("round", "bool")
 
-
 @dataclass
 class Category:
     id: str
     name: str
     color: str
     order: int = 100
-
 
 @dataclass
 class BlockDef:
@@ -49,27 +25,22 @@ class BlockDef:
     tooltip: str = ""
     palette: Optional[str] = None
 
-
 CATEGORIES: Dict[str, Category] = {}
 BLOCKS: Dict[str, BlockDef] = {}
 
-
 def category(id: str, name: str, color: str, order: int = 100) -> None:
     CATEGORIES[id] = Category(id, name, color, order)
-
 
 # part specs (used in specs=)
 
 def label(text: str) -> dict:
     return {"t": "label", "text": text}
 
-
 def inp(inline: Optional[str] = "any", default: str = "") -> dict:
     # input socket. inline: None (must be filled by a block), 'any', 'number', 'text'.
     if inline not in (None, "any", "number", "text"):
         raise ValueError("bad inline kind %r" % (inline,))
     return {"t": "input", "inline": inline, "default": default}
-
 
 def dropdown(options, default: Optional[str] = None) -> dict:
     # options: list of 'value' strings or (label, value) pairs.
@@ -79,35 +50,32 @@ def dropdown(options, default: Optional[str] = None) -> dict:
         opts.append({"label": lab, "value": val})
     return {"t": "dropdown", "options": opts, "default": default if default is not None else opts[0]["value"]}
 
-
 def text(default: str = "") -> dict:
     return {"t": "text", "default": default}
 
-
 def number(default: str = "0") -> dict:
     return {"t": "number", "default": default}
-
 
 def variable(writes: bool = False) -> dict:
     # dropdown of the user's variables. writes=True marks it as assigned by the block.
     return {"t": "variable", "writes": writes}
 
+def sub() -> dict:
+    # dropdown of the subroutines defined in the workspace
+    return {"t": "sub"}
 
 def slot() -> dict:
     # a C-shaped mouth that holds a stack of statements.
     return {"t": "slot"}
 
-
 def many(count: int = 2, min: int = 1, max: int = 20, inline: Optional[str] = "any", default: str = "") -> dict:
     # a variable number of input sockets with +/- buttons
     return {"t": "variadic", "count": count, "min": min, "max": max, "inline": inline, "default": default}
-
 
 # registration
 
 _TOKEN = re.compile(r"\{(\w+)\}")
 _PLACEHOLDER = re.compile(r"\{(\$?\w+)(?:\|(\w+))?\}")
-
 
 def _parse_pattern(pattern: str, specs: dict) -> List[dict]:
     parts: List[dict] = []
@@ -133,7 +101,6 @@ def _parse_pattern(pattern: str, specs: dict) -> List[dict]:
         raise ValueError("specs not used in pattern %r: %s" % (pattern, sorted(extra)))
     return parts
 
-
 def define(type: str, category: str, kind: str, pattern: str, code, specs: Optional[dict] = None,
            shape: str = "round", tooltip: str = "", palette: Optional[str] = None) -> BlockDef:
     if type in BLOCKS:
@@ -153,7 +120,6 @@ def define(type: str, category: str, kind: str, pattern: str, code, specs: Optio
     bdef = BlockDef(type, category, kind, parts, code, shape, tooltip, palette)
     BLOCKS[type] = bdef
     return bdef
-
 
 def catalog() -> dict:
     # JSON-serialisable description of all categories and blocks for the frontend.

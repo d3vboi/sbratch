@@ -35,6 +35,7 @@
         n.counts[p.name] = p.count;
         if (p.inline !== null) for (let i = 0; i < p.count; i++) n.fields[p.name + '_' + i] = p.default;
       } else if (p.t === 'variable') n.fields[p.name] = (ws && ws.variables[0]) || '';
+        else if (p.t === 'sub') n.fields[p.name] = subNames()[0] || '';
     }
     Object.assign(n.fields, preset || {});
     return n;
@@ -95,6 +96,22 @@
   }
 
   const pruneStacks = () => { ws.stacks = ws.stacks.filter((s) => s.blocks.length); };
+  /* subroutines */
+
+  function subNames() {
+    const out = [];
+    if (ws) for (const st of ws.stacks) {
+      const f = st.blocks[0];
+      const n = f && f.type === 'sub_def' ? (f.fields.name || '').trim() : '';
+      if (n && !out.includes(n)) out.push(n);
+    }
+    return out;
+  }
+
+  function renameSub(from, to) {
+    if (!from || !to || from === to) return;
+    walk((n) => { if (n.type === 'sub_call' && n.fields.name === from) n.fields.name = to; });
+  }
 
   /* variables */
 
@@ -183,8 +200,22 @@
       i.value = node.fields[p.name] != null ? node.fields[p.name] : p.default;
       autosize(i);
       i.addEventListener('input', () => { node.fields[p.name] = i.value; autosize(i); fieldInput(); });
-      i.addEventListener('change', fieldCommit);
+      if (node.type === 'sub_def') {
+        i.dataset.old = i.value.trim();
+        i.addEventListener('change', () => { renameSub(i.dataset.old, i.value.trim()); structuralChange(); });
+      } else i.addEventListener('change', fieldCommit);
       return i;
+    }
+    if (p.t === 'sub') {
+      const s = el('select', 'field');
+      const cur = node.fields[p.name] || '';
+      const names = subNames();
+      if (!cur) { const o = el('option', null, 'choose…'); o.value = ''; s.appendChild(o); }
+      else if (!names.includes(cur)) { const o = el('option', null, cur + ' (missing)'); o.value = cur; s.appendChild(o); }
+      names.forEach((v) => { const o = el('option', null, v); o.value = v; s.appendChild(o); });
+      s.value = cur;
+      s.addEventListener('change', () => { node.fields[p.name] = s.value; fieldInput(); fieldCommit(); });
+      return s;
     }
 
     if (p.t === 'dropdown') {
