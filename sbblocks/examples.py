@@ -63,20 +63,6 @@ def _times_table():
         ]}),
     )
 
-
-def _fizzbuzz():
-    inner = node("if_elseif", inputs={
-        "c1": cmp(node("math_remainder", inputs={"dividend": var("n"), "divisor": num(3)}), "=", num(0)),
-        "c2": cmp(node("math_remainder", inputs={"dividend": var("n"), "divisor": num(5)}), "=", num(0)),
-    }, slots={"b1": [node("tw_writeline", {"value": "Fizz"})],
-              "b2": [node("tw_writeline", {"value": "Buzz"})],
-              "b3": [say(var("n"))]})
-    outer = node("if_else",
-                 inputs={"cond": cmp(node("math_remainder", inputs={"dividend": var("n"), "divisor": num(15)}), "=", num(0))},
-                 slots={"then": [node("tw_writeline", {"value": "FizzBuzz"})], "otherwise": [inner]})
-    return workspace(["n"], node("for", {"var": "n", "start": "1", "end": "30"}, slots={"body": [outer]}))
-
-
 def _fruit_list():
     return workspace(
         ["fruits", "fruit"],
@@ -93,6 +79,5 @@ EXAMPLES = {
     "hello": {"title": "Hello, World!", "workspace": _hello()},
     "greeting": {"title": "Ask for a name", "workspace": _greeting()},
     "times_table": {"title": "Times table (for loop)", "workspace": _times_table()},
-    "fizzbuzz": {"title": "FizzBuzz (if / else)", "workspace": _fizzbuzz()},
     "fruit_list": {"title": "Lists and for each", "workspace": _fruit_list()},
 }

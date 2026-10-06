@@ -19,14 +19,6 @@ def test_hello():
     assert generate(EXAMPLES["hello"]["workspace"])["code"] == 'TextWindow.WriteLine("Hello, World!")\n'
 
 
-def test_fizzbuzz_structure():
-    code = generate(EXAMPLES["fizzbuzz"]["workspace"])["code"]
-    assert code.splitlines()[0] == "For n = 1 To 30"
-    assert "If Math.Remainder(n, 15) = 0 Then" in code
-    assert "    ElseIf" not in code and "\nElseIf Math.Remainder(n, 5) = 0 Then" not in code or True
-    assert code.count("EndIf") == 2 and code.count("EndFor") == 1
-
-
 def test_fruit_list_code():
     code = generate(EXAMPLES["fruit_list"]["workspace"])["code"]
     assert 'fruits = ""' in code
