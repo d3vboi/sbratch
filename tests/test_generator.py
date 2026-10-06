@@ -3,9 +3,9 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from sbblocks import generate, catalog
-from sbblocks.examples import EXAMPLES, node, num, txt, var, arith, workspace, say, join
-from sbblocks.lang import sb_string, strip_outer
+from sbratch import generate, catalog
+from sbratch.examples import EXAMPLES, node, num, txt, var, arith, workspace, say, join
+from sbratch.lang import sb_string, strip_outer
 
 
 def test_examples_generate_cleanly():

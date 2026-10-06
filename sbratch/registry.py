@@ -17,7 +17,7 @@ Blocks are declared with `define(...)` using a *pattern* string, e.g.
       {slot}        (alone on a line) the statements nested in a slot, indented
 * Statement blocks produce lines; value blocks produce one expression.
 
-To add a block: call define() in a module under sbblocks/definitions/.
+To add a block: call define() in a module under sbratch/definitions/.
 To add a category: call category() at the top of that module.
 """
 from __future__ import annotations

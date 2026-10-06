@@ -1,7 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-sbblocks/__pycache__/
 sbratch/__pycache__/
+sbratch/definitions/__pycache__
 *.py[codz]
 *$py.class
 

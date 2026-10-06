@@ -1,6 +1,6 @@
 'use strict';
 /*
- * workspace model (see sbblocks/generator.py):
+ * workspace model (see sbratch/generator.py):
  *   ws = { variables: [name], stacks: [{id, x, y, blocks: [node]}] }
  *   node = { id, type, fields: {}, inputs: {socket: node|null}, slots: {name: [node]}, counts: {} }
  */
@@ -566,7 +566,7 @@
     $('#btn-undo').addEventListener('click', () => { if (hpos > 0) restore(hpos - 1); });
     $('#btn-redo').addEventListener('click', () => { if (hpos < history.length - 1) restore(hpos + 1); });
     $('#btn-clear').addEventListener('click', () => { if (confirm('Clear the whole workspace?')) loadWorkspace(defaultWs(), false); });
-    $('#btn-export').addEventListener('click', () => download('workspace.sbblocks.json', JSON.stringify(ws, null, 2), 'application/json'));
+    $('#btn-export').addEventListener('click', () => download('workspace.sbratch.json', JSON.stringify(ws, null, 2), 'application/json'));
     $('#btn-import').addEventListener('click', () => $('#file-import').click());
     $('#file-import').addEventListener('change', (e) => {
       const f = e.target.files[0]; e.target.value = '';

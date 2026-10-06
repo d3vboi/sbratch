@@ -2,9 +2,9 @@ import os
 
 from flask import Flask, jsonify, request, send_from_directory
 
-from sbblocks import catalog, generate
-from sbblocks.examples import EXAMPLES
-from sbblocks.lang import RESERVED
+from sbratch import catalog, generate
+from sbratch.examples import EXAMPLES
+from sbratch.lang import RESERVED
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__, static_folder=os.path.join(BASE, "static"), static_url_path="/static")
