@@ -33,7 +33,7 @@ def sb_string(s: str) -> str:
         if tok in _SPECIAL_CHARS:
             pieces.append(f"Text.GetCharacter({_SPECIAL_CHARS[tok]})")
         else:
-            pieces.append(f'"{tok}f"')
+            pieces.append(f'"{tok}"')
     if not pieces:
         return '""'
     acc = pieces[0]
