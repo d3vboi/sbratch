@@ -12,7 +12,7 @@
 
   let defs = {}, cats = {}, reserved = new Set();
   let ws = null;
-  let containers = {}; // container id -> array of nodes (rebuilt on every render)
+  let containers = {}; // container id -> array of nodes (rebuilt every render)
   let history = [], hpos = -1;
   let lastDiags = [], lastCode = '';
   let genTimer = null, genSeq = 0;
