@@ -5,7 +5,7 @@
  *   node = { id, type, fields: {}, inputs: {socket: node|null}, slots: {name: [node]}, counts: {} }
  */
 (() => {
-  const STORE = 'sb-blocks-workspace-v1';
+  const STORE = 'sbratch-workspace-v1';
   const $ = (s) => document.querySelector(s);
   const canvas = $('#canvas'), scroller = $('#scroller'), palette = $('#palette'), rail = $('#rail');
   const sidebar = $('#sidebar'), codeEl = $('#code'), diagsEl = $('#diags'), statusEl = $('#status'), ctxEl = $('#ctx');
