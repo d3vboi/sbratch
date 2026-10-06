@@ -255,8 +255,10 @@
       head.style.setProperty('--c', cat.color); head.id = 'cat-' + cat.id;
       const rb = el('button', 'rail-btn', cat.name);
       rb.style.setProperty('--c', cat.color);
-      rb.addEventListener('click', () => head.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+      const anc = el('div');
+      rb.addEventListener('click', () => palette.scrollTo({ top: anc.getBoundingClientRect().top - palette.getBoundingClientRect().top + palette.scrollTop, behavior: 'smooth' }));
       rail.appendChild(rb);
+      palette.appendChild(anc);
       palette.appendChild(head);
       const list = Object.values(defs).filter((d) => d.category === cat.id);
       if (list.some((d) => d.palette === 'variables')) {
