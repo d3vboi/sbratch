@@ -1,6 +1,6 @@
 from ..registry import category, define, inp, variable
 
-category("variables", "Variables", "#E8602C", 20)
+category("variables", "Variables", "#ff8c1a", 20)
 
 # palette="variables": the palette shows one copy of this block per user variable.
 define("var_get", "variables", "value", "{name}",

@@ -1,6 +1,6 @@
 from ..registry import category, define, inp, slot, variable, text
 # all the "control" blocks (anything that contains other code blocks)
-category("control", "Control", "#E6A117", 10)
+category("control", "Control", "#ffab19", 10)
 
 define("start", "control", "hat", "when program starts", "",
        tooltip="Your program starts here. Everything attached below becomes the generated code.")
@@ -43,7 +43,7 @@ define("repeat", "control", "statement", "repeat {count} times {body}",
 
 define("forever", "control", "statement", "repeat forever {body}",
        specs={"body": slot()},
-       code="While True\n{body}\nEndWhile",
+       code="While \"True\"\n{body}\nEndWhile",
        tooltip="Loops until the program ends (use Program.End)")
 
 define("foreach", "control", "statement", "for each {item} in list {list} {body}",
