@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Small Basic Blocks</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header id="topbar">
+    <h1><span>SB</span>ratch</h1>
+    <div class="tools">
+      <button id="btn-undo" title="Undo (Ctrl+Z)">&#8630; Undo</button>
+      <button id="btn-redo" title="Redo (Ctrl+Y)">Redo &#8631;</button>
+      <select id="examples" title="Load an example program"><option value="">Examples&hellip;</option></select>
+      <button id="btn-export">Export</button>
+      <button id="btn-import">Import</button>
+      <input type="file" id="file-import" accept=".json,application/json" hidden>
+      <button id="btn-clear">Clear</button>
+    </div>
+  </header>
+
+  <main>
+    <aside id="sidebar">
+      <nav id="rail"></nav>
+      <div id="palette"></div>
+    </aside>
+
+    <section id="scroller"><div id="canvas"></div></section>
+
+    <aside id="codepane">
+      <div class="codehead">
+        <h2>SBratch</h2>
+        <button id="btn-copy">Copy</button>
+        <button id="btn-download">Download .sb</button>
+      </div>
+      <div id="status"></div>
+      <pre id="code"></pre>
+      <ul id="diags"></ul>
+    </aside>
+  </main>
+
+  <div id="ctx" class="ctx" hidden></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
