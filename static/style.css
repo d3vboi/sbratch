@@ -46,9 +46,20 @@ select {
   font-weight: 700;
   letter-spacing: 0.2px;
 }
-#topbar h1 span {
+.accent {
   color: var(--accent);
 }
+.alpha {
+  color: mediumaquamarine;
+  font-style: italic;
+  font-family: cursive;
+}
+/*#topbar h1 span #alpha {
+  color: aquamarine;
+}
+#topbar h1 span #a {
+  color: var(--accent);
+}*/
 .tools {
   display: flex;
   gap: 6px;
