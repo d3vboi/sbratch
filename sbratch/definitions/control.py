@@ -3,7 +3,7 @@ from ..registry import category, define, inp, slot, variable, text
 category("control", "Control", "#ffab19", 10)
 
 define("start", "control", "hat", "when program starts", "",
-       tooltip="Your program starts here. Everything attached below becomes the generated code.")
+    tooltip="Your program starts here. Everything attached below becomes the generated code.")
 
 define("if", "control", "statement", "if {cond} then {body}",
     specs={"cond": inp(None), "body": slot()},
