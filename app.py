@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 
 from flask import Flask, jsonify, request, send_from_directory
 
@@ -8,7 +9,11 @@ from sbratch import catalog, generate
 from sbratch.lang import RESERVED
 
 BASE = os.path.dirname(os.path.abspath(__file__))
-app = Flask(__name__, static_folder=os.path.join(BASE, "static"), static_url_path="/static")
+if getattr(sys, 'frozen', False):
+    template_folder = os.path.join(sys._MEIPASS, 'templates')
+    app = Flask(__name__, template_folder=template_folder)
+else:
+    app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 1024 * 1024  # 1 MB per request
 EX_DIR = os.path.join(BASE, "examples")
 CATALOG = dict(catalog(), reserved=sorted(RESERVED))  # built once, read-only afterwards
